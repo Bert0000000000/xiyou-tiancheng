@@ -1,12 +1,19 @@
 :root {
-  --primary-color: #00b96b;
+  --primary-color: #00ff88;
+  --primary-dark: #00cc6a;
   --secondary-color: #00d4ff;
-  --bg-dark: #0a0a0f;
-  --bg-card: #12121a;
+  --accent-color: #ff00ff;
+  --bg-dark: #050510;
+  --bg-card: #0a0a1a;
+  --bg-card-hover: #12122a;
   --text-primary: #ffffff;
-  --text-secondary: #a0a0b0;
-  --border-color: #2a2a3a;
-  --glow-color: rgba(0, 212, 255, 0.3);
+  --text-secondary: #8888aa;
+  --border-color: #1a1a3a;
+  --border-glow: #2a2a5a;
+  --glow-color: rgba(0, 255, 136, 0.4);
+  --glow-blue: rgba(0, 212, 255, 0.4);
+  --gradient-1: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+  --gradient-2: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
 }
 
 * {
@@ -47,9 +54,76 @@ body {
 
 /* 科技感发光效果 */
 .glow {
-  box-shadow: 0 0 20px var(--glow-color);
+  box-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-blue);
 }
 
 .glow-text {
-  text-shadow: 0 0 10px var(--glow-color);
+  text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-blue);
+}
+
+/* 渐变背景 */
+.gradient-bg {
+  background: var(--gradient-2);
+}
+
+/* 卡片悬浮效果 */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px var(--glow-color);
+  border-color: var(--primary-color);
+}
+
+/* 按钮渐变 */
+.btn-gradient {
+  background: var(--gradient-1);
+  border: none;
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-gradient:hover {
+  box-shadow: 0 0 30px var(--glow-color);
+}
+
+/* 霓虹边框 */
+.neon-border {
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: var(--gradient-1);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.neon-border:hover::before {
+  opacity: 1;
+}
+
+/* 动画效果 */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.float {
+  animation: float 3s infinite ease-in-out;
 }

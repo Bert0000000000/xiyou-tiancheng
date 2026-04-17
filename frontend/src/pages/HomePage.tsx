@@ -34,85 +34,149 @@ export default function HomePage() {
       <div style={{ position: 'relative', zIndex: 1, padding: '40px 20px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           {/* 头部 */}
-          <header style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <h1 className="glow-text" style={{ fontSize: '48px', marginBottom: '16px' }}>
-              🚀 西游天团成长系统
-            </h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '18px' }}>
+          <header style={{ textAlign: 'center', marginBottom: '60px', padding: '40px 0' }}>
+            <div className="float" style={{ display: 'inline-block' }}>
+              <h1 className="glow-text" style={{ 
+                fontSize: '64px', 
+                marginBottom: '16px',
+                background: 'var(--gradient-1)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>
+                🚀 西游天团成长系统
+              </h1>
+            </div>
+            <p style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '20px',
+              letterSpacing: '4px',
+              textTransform: 'uppercase'
+            }}>
               科幻炫技 · 成长进化 · 无限可能
             </p>
-          </header>
+            <div style={{ 
+              width: '200px', 
+              height: '2px', 
+              background: 'var(--gradient-1)',
+              margin: '30px auto'
+            }} />
 
           {/* 用户信息卡片 */}
           <Card
+            className="neon-border card-hover"
             style={{
               background: 'var(--bg-card)',
-              border: '1px solid var(--border-color)',
+              backdropFilter: 'blur(10px)',
               marginBottom: '40px',
+              padding: '24px',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
               <div>
-                <h2 style={{ marginBottom: '8px' }}>欢迎，{user?.nickname || '探索者'}</h2>
-                <p style={{ color: 'var(--text-secondary)' }}>
-                  当前等级：LV.{level} | 经验值：{user?.exp || 0}/1000
-                </p>
+                <h2 style={{ 
+                  marginBottom: '12px',
+                  fontSize: '28px',
+                  background: 'var(--gradient-1)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
+                  欢迎，{user?.nickname || '探索者'}
+                </h2>
+                <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+                  <div>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>当前等级</span>
+                    <p style={{ fontSize: '24px', color: 'var(--primary-color)', fontWeight: 'bold', margin: 0 }}>
+                      LV.{level}
+                    </p>
+                  </div>
+                  <div style={{ width: '200px' }}>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>经验值</span>
+                    <p style={{ fontSize: '18px', color: 'var(--secondary-color)', margin: '4px 0' }}>
+                      {user?.exp || 0} / 1000
+                    </p>
+                  </div>
+                </div>
               </div>
-              <Button type="primary" size="large" onClick={() => navigate('/growth')}>
-                查看成长路径
+              <Button 
+                className="btn-gradient" 
+                size="large" 
+                onClick={() => navigate('/growth')}
+                style={{ borderRadius: '8px', padding: '0 32px' }}
+              >
+                查看成长路径 →
               </Button>
             </div>
           </Card>
 
           {/* 功能入口 */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px' }}>
             <Card
+              className="neon-border card-hover"
               hoverable
               style={{
                 background: 'var(--bg-card)',
-                border: '1px solid var(--border-color)',
+                backdropFilter: 'blur(10px)',
                 textAlign: 'center',
-                padding: '40px 20px',
+                padding: '48px 24px',
+                cursor: 'pointer',
               }}
               onClick={() => navigate('/quests')}
             >
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎯</div>
-              <h3>任务中心</h3>
-              <p style={{ color: 'var(--text-secondary)', marginTop: '8px' }}>
+              <div className="float" style={{ fontSize: '64px', marginBottom: '24px', animationDelay: '0s' }}>🎯</div>
+              <h3 style={{ 
+                fontSize: '24px', 
+                marginBottom: '12px',
+                color: 'var(--primary-color)'
+              }}>任务中心</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6' }}>
                 完成日常任务，获取丰厚奖励
               </p>
             </Card>
 
             <Card
+              className="neon-border card-hover"
               hoverable
               style={{
                 background: 'var(--bg-card)',
-                border: '1px solid var(--border-color)',
+                backdropFilter: 'blur(10px)',
                 textAlign: 'center',
-                padding: '40px 20px',
+                padding: '48px 24px',
+                cursor: 'pointer',
               }}
               onClick={() => navigate('/growth')}
             >
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>📈</div>
-              <h3>成长路径</h3>
-              <p style={{ color: 'var(--text-secondary)', marginTop: '8px' }}>
+              <div className="float" style={{ fontSize: '64px', marginBottom: '24px', animationDelay: '0.5s' }}>📈</div>
+              <h3 style={{ 
+                fontSize: '24px', 
+                marginBottom: '12px',
+                color: 'var(--secondary-color)'
+              }}>成长路径</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6' }}>
                 可视化你的成长轨迹
               </p>
             </Card>
 
             <Card
+              className="neon-border card-hover"
               hoverable
               style={{
                 background: 'var(--bg-card)',
-                border: '1px solid var(--border-color)',
+                backdropFilter: 'blur(10px)',
                 textAlign: 'center',
-                padding: '40px 20px',
+                padding: '48px 24px',
+                cursor: 'pointer',
               }}
               onClick={() => navigate('/ranking')}
             >
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏆</div>
-              <h3>排行榜</h3>
-              <p style={{ color: 'var(--text-secondary)', marginTop: '8px' }}>
+              <div className="float" style={{ fontSize: '64px', marginBottom: '24px', animationDelay: '1s' }}>🏆</div>
+              <h3 style={{ 
+                fontSize: '24px', 
+                marginBottom: '12px',
+                color: 'var(--accent-color)'
+              }}>排行榜</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6' }}>
                 与全服玩家一较高下
               </p>
             </Card>
