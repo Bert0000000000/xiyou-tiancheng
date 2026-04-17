@@ -1,0 +1,131 @@
+// 西游天团成长系统 - 数据库 Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id        String   @id @default(uuid())
+  nickname  String
+  avatar    String?
+  email     String?  @unique
+  exp       Int      @default(0)
+  level     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关联
+  growthLogs   GrowthLog[]
+  userQuests   UserQuest[]
+  achievements UserAchievement[]
+  analytics    AnalyticsEvent[]
+
+  @@index([level])
+  @@index([exp])
+}
+
+// 成长记录表
+model GrowthLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expChange Int
+  fromLevel Int
+  toLevel   Int
+  reason    String   // 来源：task_complete, daily_login, etc.
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+// 任务表
+model Quest {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  type        QuestType
+  expReward   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关联
+  userQuests UserQuest[]
+
+  @@index([type])
+}
+
+enum QuestType {
+  DAILY
+  ACHIEVEMENT
+  CHALLENGE
+}
+
+// 用户任务进度表
+model UserQuest {
+  id        String   @id @default(uuid())
+  userId    String
+  questId   String
+  user      User     @relation(fields: [userId], references: [id])
+  quest     Quest    @relation(fields: [questId], references: [id])
+  status    QuestStatus @default(PENDING)
+  progress  Int      @default(0)
+  total     Int      @default(1)
+  completedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, questId])
+  @@index([userId, status])
+}
+
+enum QuestStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+// 成就表
+model Achievement {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  condition   String   // 达成条件
+  createdAt   DateTime @default(now())
+
+  // 关联
+  userAchievements UserAchievement[]
+}
+
+// 用户成就表
+model UserAchievement {
+  id            String   @id @default(uuid())
+  userId        String
+  achievementId String
+  user          User        @relation(fields: [userId], references: [id])
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  unlockedAt    DateTime @default(now())
+
+  @@unique([userId, achievementId])
+}
+
+// 埋点事件表
+model AnalyticsEvent {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  sessionId String
+  eventType String
+  properties Json?
+  timestamp DateTime @default(now())
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([timestamp])
+}
