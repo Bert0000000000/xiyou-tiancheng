@@ -21,15 +21,16 @@
 - Vite + Vitest（构建 + 测试）
 
 ### 后端 (backend/)
-- NestJS + TypeScript
-- Prisma（ORM）
+- FastAPI + Python
+- SQLAlchemy（ORM）
 - PostgreSQL + Redis
-- Swagger（API 文档）
+- Pydantic（数据验证）
 
 ## 快速开始
 
 ### 环境要求
-- Node.js >= 18
+- Node.js >= 18（前端）
+- Python >= 3.9（后端）
 - PostgreSQL >= 14
 - Redis >= 6
 
@@ -42,7 +43,7 @@ npm install
 
 # 后端
 cd backend
-npm install
+pip install -r requirements.txt
 ```
 
 ### 配置数据库
@@ -58,7 +59,7 @@ cp .env.example .env
 ```bash
 # 启动后端（端口 4000）
 cd backend
-npm run start:dev
+uvicorn app.main:app --reload --host 0.0.0.0 --port 4000
 
 # 启动前端（端口 3000）
 cd frontend
@@ -68,7 +69,7 @@ npm run dev
 访问：
 - 前端：http://localhost:3000
 - 后端 API：http://localhost:4000
-- API 文档：http://localhost:4000/api/docs
+- API 文档：http://localhost:4000/docs
 
 ## 项目结构
 
@@ -82,15 +83,18 @@ xiyou-tiancheng/
 │   │   ├── utils/      # 工具函数（含埋点 SDK）
 │   │   └── styles/     # 全局样式
 │   └── package.json
-├── backend/            # NestJS 后端
-│   ├── src/
-│   │   └── modules/    # 功能模块
-│   │       ├── user/       # 用户模块
-│   │       ├── growth/     # 成长模块
-│   │       ├── quest/      # 任务模块
-│   │       └── analytics/  # 埋点模块
-│   └── prisma/
-│       └── schema.prisma   # 数据库 Schema
+├── backend/            # FastAPI 后端
+│   ├── app/
+│   │   ├── main.py         # FastAPI 应用入口
+│   │   ├── models.py       # SQLAlchemy 数据模型
+│   │   ├── core/
+│   │   │   └── config.py   # 配置管理
+│   │   └── routers/
+│   │       ├── users.py    # 用户管理 API
+│   │       ├── growth.py   # 成长系统 API
+│   │       ├── quests.py   # 任务系统 API
+│   │       └── analytics.py# 埋点 API
+│   └── requirements.txt    # Python 依赖
 └── docs/               # 项目文档
 ```
 
